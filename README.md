@@ -1,8 +1,9 @@
 # Isaac Chen
-## Self-Intro
 
-I am a Linux System Administrator.
-I just moved to Seatte.
+## Self Intro
+
+  * I am a Linux System Administrator.
+  * I just moved to Seatte.
 
 ## My Profile
 
