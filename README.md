@@ -3,7 +3,7 @@
 ## Self Intro
 
   * I am a Linux System Administrator.
-  * I just moved to Seatte.
+  * I just moved to Seattle.
 
 ## My Profile
 
