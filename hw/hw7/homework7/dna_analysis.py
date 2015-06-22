@@ -58,6 +58,8 @@ g_count = 0
 c_count = 0
 a_count = 0
 t_count = 0
+# noise_count for non-G/C/A/T
+n_count = 0
 
 
 # for each base pair in the string,
@@ -72,27 +74,33 @@ for bp in seq:
         # count C/G individually
         if bp == 'C':
             c_count = c_count + 1
-        else:
+        elif bp == 'G':
             g_count = g_count + 1
+        else:
+            n_count = n_count + 1
     else:
         # if not G/C, must be A/T, so incrememnt count
         at_count = at_count + 1
         # count A/T individually
         if bp == 'A':
             a_count = a_count + 1
-        else:
+        elif bp == 'T':
             t_count = t_count + 1
+        else:
+            n_count = n_count + 1
 
 
+# total G/C/A/T count
+gcat_count = g_count + c_count + a_count + t_count
 # divide the gc_count by the total_count
-gc_content = float(gc_count) / total_count
+gc_content = float(gc_count) / gcat_count
 # divide the at_count by the total count
-at_content = float(at_count) / total_count
+at_content = float(at_count) / gcat_count
 # calculate content individually
-g_content = float(g_count) / total_count
-c_content = float(c_count) / total_count
-a_content = float(a_count) / total_count
-t_content = float(t_count) / total_count
+g_content = float(g_count) / gcat_count
+c_content = float(c_count) / gcat_count
+a_content = float(a_count) / gcat_count
+t_content = float(t_count) / gcat_count
 
 # Print the answer
 print('GC-content:', gc_content)
@@ -101,3 +109,7 @@ print('G-content:', g_content)
 print('C-content:', c_content)
 print('A-content:', a_content)
 print('T-content:', t_content)
+print('Sum of G/C/A/T count:', gcat_count)
+print('Total base pair count:', total_count)
+print('Length of DNA sequence:', len(seq))
+print('Noise count:', n_count)
