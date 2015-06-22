@@ -1,0 +1,57 @@
+Name: Isaac Chen
+CSE 140
+Homework 2
+
+For each problem that requires a written answer, write (or copy-and-paste)
+your answers in this file.  When you are done, you should have replaced all
+the ellipses (the three dots) with your answers.
+
+At the end, you will turn in this file along with your modified
+dna_analysis.py program.
+
+
+Problem 1:
+
+(No answers in this file.)
+
+Problem 2:
+
+GC-content: 0.4302926296296296
+
+Problem 3:
+
+Commenting out 'linenum =0' will lead to this error:
+NameError: name 'linenum' is not defined
+because linenum variable on line 38 is not defined
+
+If 'gc_count = 0' is commented out, reference to gc_count
+on line 64 will generate the same undefined error
+
+Problem 4:
+
+GC-content: 0.4302926296296296
+AT-content: 0.5697073703703703
+
+Problem 5:
+
+...
+
+Problem 6:
+
+...
+
+Problem 7:
+
+...
+
+Problem 8:
+
+...
+
+Collaboration:
+
+...
+
+Reflection:
+
+...
