@@ -113,3 +113,10 @@ print('Total base pair count:', total_count)
 print('Length of DNA sequence:', len(seq))
 print('Noise count:', n_count)
 print('AT/GC Ratio:', at_gc_ratio)
+
+if gc_content > 0.6:
+    print('High GC-content')
+elif gc_content < 0.4:
+    print('Low GC-content')
+else:
+    print('Moderate GC-content')

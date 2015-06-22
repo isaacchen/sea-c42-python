@@ -56,12 +56,15 @@ AT/GC Ratio: 0.43059987061138255
 
 Problem 8:
 
-...
+Moderate GC-content
 
 Collaboration:
 
-...
+I worked on the problems by myself.
 
 Reflection:
 
-...
+Data analysis is 'garbage-in, garbage-out'.
+Scrub the data first.
+
+Also, review logic and update comment in code revision.
