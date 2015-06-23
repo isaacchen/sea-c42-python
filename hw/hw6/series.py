@@ -27,7 +27,9 @@ def sum_series(x, y=0, z=1):
     else:
         print('other series')
 
-if __name__ == '__main__':
-    # expected 10th value
-    def test_fibonacci():
-        assert fibonacci(10) == 55
+if (__name__ == '__main__'):
+    # validate against 10th value
+    assert fibonacci(10) == 55
+    assert lucas(10) == 123
+    assert sum_series(10) == 55
+    assert sum_series(10,2,1) == 123
