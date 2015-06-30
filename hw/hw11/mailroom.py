@@ -37,6 +37,8 @@ def thankyou():
         main_prompt()
     else:
         found = find_name(doners, my_name)
+        # no difference if one nested list per transaction
+        # since there is no partial list just for doner's name
         if (not found):
             amount = take_donation()
         else:
@@ -75,9 +77,9 @@ def report(donerlist):
     for k in my_names:
         n = (my_names[k]).ljust(20)
         c = str(my_count[k]).rjust(4)
-        t = format(my_total[k], '.2f').rjust(10)
+        t = ('$' + format(my_total[k], '.2f')).rjust(10)
         avg = my_total[k] / my_count[k]
-        a = format(avg, '.2f').rjust(10)
+        a = ('$' + format(avg, '.2f')).rjust(10)
         line = (n + '|' + t + ' |' + c + ' |' + a)
         print(line)
     input('\nPress Enter to Continue...\n\n> ')
