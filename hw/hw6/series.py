@@ -32,4 +32,4 @@ if (__name__ == '__main__'):
     assert fibonacci(10) == 55
     assert lucas(10) == 123
     assert sum_series(10) == 55
-    assert sum_series(10,2,1) == 123
+    assert sum_series(10, 2, 1) == 123
