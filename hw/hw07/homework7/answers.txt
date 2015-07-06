@@ -52,7 +52,7 @@ Then I needed to exclude the noise.
 
 Problem 7:
 
-AT/GC Ratio: 0.43059987061138255
+AT/GC Ratio: 1.3223416174746196
 
 Problem 8:
 

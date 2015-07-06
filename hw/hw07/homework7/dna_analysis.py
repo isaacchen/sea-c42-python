@@ -89,6 +89,7 @@ for bp in seq:
 
 # total G/C/A/T count
 gcat_count = g_count + c_count + a_count + t_count
+gc_count = g_count + c_count
 # divide the gc_count by gcat_count
 gc_content = float(gc_count) / gcat_count
 # divide the at_count by gcat_count
@@ -99,7 +100,7 @@ c_content = float(c_count) / gcat_count
 a_content = float(a_count) / gcat_count
 t_content = float(t_count) / gcat_count
 # AT/GC ratio
-at_gc_ratio = float(gc_count) / gcat_count
+at_gc_ratio = float(at_count) / gc_count
 
 # Print the answer
 print('GC-content:', gc_content)
