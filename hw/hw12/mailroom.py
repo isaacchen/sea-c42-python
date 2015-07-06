@@ -1,3 +1,19 @@
+# Revision Goals
+# more descriptive variable names
+# fixed: idle print statement
+# make clean pull request
+# all-cap global variables, no need for my_local_variable
+# use full name with space for keys
+# revisit data structure
+# design bug when calling back main_prompt()
+#
+# HW 12 Goals
+# use dicts where appropriate
+# write a full set of letters to everyone to individual files on disk
+# see if you can use a dict to switch between the users selections
+# Try to use a dict and the .format() method to do the letters
+
+
 doners = [['John Smith', 320],
           ['Mary Simpson', 100],
           ['Chris Finch', 400],
@@ -49,7 +65,7 @@ def thankyou():
         main_prompt()
 
 
-def countall(donerlist):
+def countall1(donerlist):
     my_count = {}
     my_names = {}
     my_total = {}
@@ -67,6 +83,23 @@ def countall(donerlist):
     return(my_count, my_names, my_total)
 
 
+def countall(donerlist):
+    my_count = {}
+    my_names = set()
+    my_total = {}
+    for doner in donerlist:
+        name_key = doner[0]
+        my_amount = float(doner[1])
+        if (name_key in my_names):
+            my_count[name_key] = my_count[name_key] + 1
+            my_total[name_key] = my_total[name_key] + my_amount
+        else:
+            my_names.add(name_key)
+            my_count[name_key] = 1
+            my_total[name_key] = my_amount
+    return(my_count, my_names, my_total)
+
+
 def report(donerlist):
     my_count, my_names, my_total = countall(doners)
     header = ('Name'.center(20) + '|' +
@@ -75,7 +108,7 @@ def report(donerlist):
               'Average'.rjust(10) + '\n\n' + '_' * 60 + '\n')
     print(header)
     for k in my_names:
-        n = (my_names[k]).ljust(20)
+        n = k.ljust(20)
         c = str(my_count[k]).rjust(4)
         t = ('$' + format(my_total[k], '.2f')).rjust(10)
         avg = my_total[k] / my_count[k]
@@ -131,7 +164,6 @@ def add_record(donerlist, my_name, my_amount):
 
 
 def letter(my_name, my_amount):
-    print
     dollar = format(float(my_amount), '.2f')
     text = ('Dear ' + my_name + ',\n\n' +
             'Thank you so much for your kind donation of $' + dollar +
