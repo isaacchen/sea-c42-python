@@ -8,7 +8,7 @@
 
 
 ###########################################################################
-### Libraries
+# Libraries
 ###
 
 # The sys module supports reading files, command-line arguments, etc.
@@ -16,7 +16,7 @@ import sys
 
 
 ###########################################################################
-### Read the nucleotides into a variable named seq
+# Read the nucleotides into a variable named seq
 ###
 
 # You need to specify a file name
@@ -44,7 +44,7 @@ for line in inputfile:
 
 
 ###########################################################################
-### Compute statistics
+# Compute statistics
 ###
 
 # Total nucleotides seen so far.
@@ -104,10 +104,10 @@ at_gc_ratio = float(gc_count) / gcat_count
 # Print the answer
 print('GC-content:', gc_content)
 print('AT-content:', at_content)
-print('G-content:', g_content)
-print('C-content:', c_content)
-print('A-content:', a_content)
-print('T-content:', t_content)
+print('G-count:', g_count)
+print('C-count:', c_count)
+print('A-count:', a_count)
+print('T-count:', t_count)
 print('Sum of G/C/A/T count:', gcat_count)
 print('Total base pair count:', total_count)
 print('Length of DNA sequence:', len(seq))
