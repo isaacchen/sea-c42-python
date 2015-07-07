@@ -181,3 +181,7 @@ answer = True
 if (__name__ == '__main__'):
     while answer:
         answer = main_prompt()
+        if answer:
+            continue
+        else:
+            break
