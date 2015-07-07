@@ -5,7 +5,7 @@
 # all-cap global variables, no need for my_local_variable
 # use full name with space for keys
 # revisit data structure
-# design bug when calling back main_prompt()
+# fixed: extra loop bug by calling back main_menu()
 #
 # HW 12 Goals
 # use dicts where appropriate
@@ -24,45 +24,48 @@ doners = [['John Smith', 320],
           ['Larry Bookman', 200]]
 
 
-def main_prompt():
+def main_menu():
     text = ('\nWelcome to Mailroom Madness\n\n' +
             'Choose from the following:\n\n' +
             'T - Send a (T)hank you\n\n' +
             'R - Create a (R)eport\n\n' +
             'quit - Quit the program\n\n> ')
-    my_choice = input(text)
-    if (my_choice == 'T') or (my_choice == 't'):
+    choice = input(text)
+    if (choice == 'T') or (choice == 't'):
         thankyou()
-    elif (my_choice == 'R') or (my_choice == 'r'):
+        return True
+    elif (choice == 'R') or (choice == 'r'):
         report(doners)
-    elif (my_choice == 'quit'):
-        answer = False
-        return answer
+        return True
+    elif (choice == 'quit'):
+        return False
     else:
-        main_prompt()
+        return True
 
 
 def thankyou():
     text = ('\nPlease enter a name, or choose from the following:\n\n' +
             'list - Print a list of previous donors\n\n' +
             'quit - Return to main menu\n\n> ')
-    my_name = input(text)
-    if (my_name == 'list'):
+    choice = input(text)
+    if (choice == 'list'):
         list_name(doners)
-    elif (my_name == 'quit'):
-        main_prompt()
+    elif (choice == 'quit'):
+        return
     else:
-        found = find_name(doners, my_name)
+        found = find_name(doners, choice)
         # no difference if one nested list per transaction
         # since there is no partial list just for doner's name
         if (not found):
             amount = take_donation()
         else:
             amount = take_donation()
-        add_record(doners, my_name, amount)
-        print(letter(my_name, amount))
-        input('Press Enter to Continue...\n\n> ')
-        main_prompt()
+        if (amount != 'quit'):
+            add_record(doners, choice, amount)
+            print(letter(choice, amount))
+            input('Press Enter to Continue...\n\n> ')
+    # always return to the main menu
+    return True
 
 
 def countall1(donerlist):
@@ -116,7 +119,6 @@ def report(donerlist):
         line = (n + '|' + t + ' |' + c + ' |' + a)
         print(line)
     input('\nPress Enter to Continue...\n\n> ')
-    main_prompt()
 
 
 def is_number(num):
@@ -129,11 +131,11 @@ def is_number(num):
 
 def take_donation():
     while True:
-        str_amount = input("\nPlease enter a donation amount or 'quit':\n\n> ")
-        if (str_amount == 'quit'):
-            main_prompt()
-        elif (is_number(str_amount)):
-            return str_amount
+        amount = input("\nPlease enter a donation amount or 'quit':\n\n> ")
+        if (amount == 'quit'):
+            return amount
+        elif (is_number(amount)):
+            return amount
         else:
             print('\nIncorrect number. Press try again')
 
@@ -147,7 +149,6 @@ def list_name(donerlist):
     for i in namelist:
         print(i)
     input('\nPress Enter to Continue...\n\n> ')
-    main_prompt()
 
 
 def find_name(donerlist, my_name):
@@ -176,12 +177,11 @@ def letter(my_name, my_amount):
     return text
 
 
-answer = True
+ANSWER = True
 
 if (__name__ == '__main__'):
-    while answer:
-        answer = main_prompt()
-        if answer:
-            continue
-        else:
+    while ANSWER:
+        ANSWER = main_menu()
+        if not ANSWER:
+            # exit the program
             break
