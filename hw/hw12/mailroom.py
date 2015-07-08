@@ -1,4 +1,4 @@
-# Revision Goals
+# Revision Goals:
 # more descriptive variable names
 # fixed: idle print statement
 # make clean pull request
@@ -7,7 +7,7 @@
 # revisit data structure
 # fixed: extra loop bug by calling back main_menu()
 #
-# HW 12 Goals
+# HW12 Goals:
 # use dicts where appropriate
 # write a full set of letters to everyone to individual files on disk
 # see if you can use a dict to switch between the users selections
@@ -67,6 +67,30 @@ def thankyou():
             amount = take_donation()
         else:
             amount = take_donation()
+        if (amount != 'quit'):
+            add_record(doners, choice, amount)
+            print(letter(choice, amount))
+            input('Press Enter to Continue...\n\n> ')
+    # always return to the main menu
+    return True
+
+
+def hw12_thankyou():
+    text = ('\nPlease enter a name, or choose from the following:\n\n' +
+            'list - Print a list of previous donors\n\n' +
+            'quit - Return to main menu\n\n> ')
+    choice = input(text)
+    if (choice == 'list'):
+        hw12_list_name_pretty(D_DONERS)
+    elif (choice == 'quit'):
+        return
+    else:
+        names = hw12_list_name(D_DONERS)
+
+        if (choice not in names.key()):
+            D_DONERS[choice] = []
+
+        amount = take_donation()
         if (amount != 'quit'):
             add_record(doners, choice, amount)
             print(letter(choice, amount))
@@ -167,6 +191,13 @@ def hw12_list_name(dict_doner):
     return names
 
 
+def hw12_list_name_pretty(dict_doner):
+    """print doner names one per line"""
+    for doner in hw12_list_name(dict_doner):
+        print(doner)
+    input('\nPress Enter to Continue...\n\n> ')
+
+
 def find_name(donerlist, my_name):
     my_found = False
     for doner in donerlist:
@@ -201,4 +232,3 @@ if (__name__ == '__main__'):
         if not ANSWER:
             # exit the program
             break
-
