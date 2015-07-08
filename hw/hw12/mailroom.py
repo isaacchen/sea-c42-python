@@ -23,6 +23,13 @@ doners = [['John Smith', 320],
           ['Mary Simpson', 200],
           ['Larry Bookman', 200]]
 
+# HW12 data structure
+D_DONERS = {'John Smith': [320],
+            'Mary Simpson': [100, 150, 200],
+            'Chris Finch': [400],
+            'Larry Bookman': [150, 200],
+            'Victoria Black': [60]}
+
 
 def main_menu():
     text = ('\nWelcome to Mailroom Madness\n\n' +
@@ -151,6 +158,15 @@ def list_name(donerlist):
     input('\nPress Enter to Continue...\n\n> ')
 
 
+def hw12_list_name(dict_doner):
+    """HW12 version, read from dictionary and store into set"""
+    names = set()
+    for doner in dict_doner:
+        if doner not in names:
+            names.add(doner)
+    return names
+
+
 def find_name(donerlist, my_name):
     my_found = False
     for doner in donerlist:
@@ -185,3 +201,4 @@ if (__name__ == '__main__'):
         if not ANSWER:
             # exit the program
             break
+
