@@ -15,9 +15,9 @@ class Element(object):
         self.content = content
 
     def append(self, new_text):
-        self.content += new_text
+        self.content += ('\n' + new_text)
 
-    def render(self, filename, ind="     "):
+    def render(self, filename, ind="    "):
         filename.write('<html>\n')
         filename.write(ind + self.content)
         filename.write('\n</html>')
