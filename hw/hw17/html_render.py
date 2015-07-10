@@ -11,8 +11,6 @@ Python class example.
 
 class Element(object):
 
-    # IND_LEVEL = "    "
-
     def __init__(self, content='', name='html', indent_level=0):
         self.content = content
         self.name = name
@@ -22,11 +20,11 @@ class Element(object):
 
     def append(self, new_child):
         self.children.append(new_child)
-        # self.content += str(new_child)
 
     def render(self, outfile, content=''):
         tag_indent = '    ' * self.indent_level
         txt_indent = '    ' * (self.indent_level + 1)
+
         if (self.name == 'html'):
             outfile.write('<%s>\n' % self.name)
         else:
@@ -34,15 +32,12 @@ class Element(object):
 
         for child in self.children:
             if (type(child) == str):
-                # add nenw content string
-                # outfile.write(indent + Element.IND_LEVEL + child + "\n")
+                # print content string
                 outfile.write(txt_indent + child + '\n')
             else:
-                # add new child node by recursinvely rendering
-                # child.render(outfile, indent + Element.IND_LEVEL)
+                # recursively render new child node
                 child.render(outfile, txt_indent)
 
-        # outfile.write("%s</%s>\n" % (indent, self.name))
         if (self.name == 'html'):
             outfile.write('</%s>' % self.name)
         else:
