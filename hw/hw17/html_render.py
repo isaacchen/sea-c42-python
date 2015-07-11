@@ -88,3 +88,18 @@ class OneLineTag(Element):
 class Title(OneLineTag):
     def __init__(self, content='', name='', indent_level=0, **kwargs):
         Element.__init__(self, content, 'title', 2, **kwargs)
+
+
+class SelfClosingTag(Element):
+    def __init__(self, content='', name='', indent_level=0, **kwargs):
+        Element.__init__(self, '', name, 0, **kwargs)
+
+    def render(self, outfile, name='', indent_level=0):
+        tag_indent = '    ' * self.indent_level
+        tagline = '%s<%s />\n' % (tag_indent, self.name)
+        outfile.write(tagline)
+
+
+class Hr(SelfClosingTag):
+    def __init__(self, content='', name='', indent_level=0, **kwargs):
+        Element.__init__(self, '', 'hr', 2, **kwargs)
