@@ -1,14 +1,15 @@
 # Revision Goals:
 # more descriptive variable names
-# fixed: idle print statement
+# done: fix idle print statement
 # make clean pull request
-# all-cap global variables, no need for my_local_variable
-# use full name with space for keys
-# revisit data structure
-# fixed: extra loop bug by calling back main_menu()
+# done: all-cap global variables, no need for my_local_variable
+# done: full name with space for keys
+# done: new data structure
+# done: fixed extra loop bug by calling back main_menu()
+# test negative number and donation with cents
 #
 # HW12 Goals:
-# use dicts where appropriate
+# done: use dicts where appropriate
 # write a full set of letters to everyone to individual files on disk
 # see if you can use a dict to switch between the users selections
 # Try to use a dict and the .format() method to do the letters
@@ -28,7 +29,8 @@ D_DONERS = {'John Smith': [320],
             'Mary Simpson': [100, 150, 200],
             'Chris Finch': [400],
             'Larry Bookman': [150, 200],
-            'Victoria Black': [60]}
+            'Victoria Black': [60]
+            }
 
 
 def main_menu():
@@ -39,10 +41,10 @@ def main_menu():
             'quit - Quit the program\n\n> ')
     choice = input(text)
     if (choice == 'T') or (choice == 't'):
-        thankyou()
+        hw12_thankyou()
         return True
     elif (choice == 'R') or (choice == 'r'):
-        report(doners)
+        hw12_report(D_DONERS)
         return True
     elif (choice == 'quit'):
         return False
@@ -86,35 +88,16 @@ def hw12_thankyou():
         return
     else:
         names = hw12_list_name(D_DONERS)
-
-        if (choice not in names.key()):
+        if (choice not in names):
             D_DONERS[choice] = []
 
         amount = take_donation()
         if (amount != 'quit'):
-            add_record(doners, choice, amount)
+            hw12_add_record(D_DONERS, choice, amount)
             print(letter(choice, amount))
             input('Press Enter to Continue...\n\n> ')
     # always return to the main menu
     return True
-
-
-def countall1(donerlist):
-    my_count = {}
-    my_names = {}
-    my_total = {}
-    for doner in donerlist:
-        name_orig = doner[0]
-        name_key = doner[0].replace(' ', '')
-        my_amount = float(doner[1])
-        if (name_key in my_names):
-            my_count[name_key] = my_count[name_key] + 1
-            my_total[name_key] = my_total[name_key] + my_amount
-        else:
-            my_count[name_key] = 1
-            my_names[name_key] = name_orig
-            my_total[name_key] = my_amount
-    return(my_count, my_names, my_total)
 
 
 def countall(donerlist):
@@ -134,6 +117,16 @@ def countall(donerlist):
     return(my_count, my_names, my_total)
 
 
+def hw12_countall(dict_doner):
+    totals = {}
+    counts = {}
+    for doner, donations in dict_doner.items():
+        total = sum(donations)
+        totals[doner] = total
+        counts[doner] = len(donations)
+    return totals, counts
+
+
 def report(donerlist):
     my_count, my_names, my_total = countall(doners)
     header = ('Name'.center(20) + '|' +
@@ -148,6 +141,23 @@ def report(donerlist):
         avg = my_total[k] / my_count[k]
         a = ('$' + format(avg, '.2f')).rjust(10)
         line = (n + '|' + t + ' |' + c + ' |' + a)
+        print(line)
+    input('\nPress Enter to Continue...\n\n> ')
+
+
+def hw12_report(dict_doner):
+    (totals, counts) = hw12_countall(dict_doner)
+    names = hw12_list_name(dict_doner)
+    header = ('Name'.center(20) + '|' +
+              'Total'.rjust(10) + ' |' +
+              '#'.rjust(4) + ' |' +
+              'Average'.rjust(10) + '\n\n' + '_' * 60 + '\n')
+    print(header)
+    for doner in names:
+        count = counts[doner]
+        total = totals[doner]
+        avg = total / count
+        line = '{:<20} | ${:d} | {:3d} | ${:.2f}'.format(doner, total, count, avg)
         print(line)
     input('\nPress Enter to Continue...\n\n> ')
 
@@ -211,6 +221,11 @@ def add_record(donerlist, my_name, my_amount):
     donerlist = donerlist.append(record)
 
 
+def hw12_add_record(dict_doner, name, amount):
+    print(type(dict_doner))
+    dict_doner[name].append(amount)
+
+
 def letter(my_name, my_amount):
     dollar = format(float(my_amount), '.2f')
     text = ('Dear ' + my_name + ',\n\n' +
@@ -224,7 +239,7 @@ def letter(my_name, my_amount):
     return text
 
 
-ANSWER = True
+ANSWER = False
 
 if (__name__ == '__main__'):
     while ANSWER:
@@ -232,3 +247,5 @@ if (__name__ == '__main__'):
         if not ANSWER:
             # exit the program
             break
+
+print(hw12_report(D_DONERS))
