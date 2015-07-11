@@ -49,11 +49,6 @@ class Element(object):
         else:
             outfile.write(('%s</%s>\n') % (tag_indent, self.name))
 
-    def OneLineTag(self, outfile, content, name='', indent_level=0):
-        tag_indent = '    ' * indent_level
-        oneline = '%s<%s>%s</%s>\n' % (tag_indent, name, self.content, name)
-        outfile.write(oneline)
-
 
 class Html(Element):
     def __init__(self, content='', name='', indent_level=0, **kwargs):
@@ -79,10 +74,17 @@ class Head(Element):
         Element.__init__(self, '', 'head', 1, **kwargs)
 
 
-class Title(Element):
+class OneLineTag(Element):
     def __init__(self, content='', name='', indent_level=0, **kwargs):
-        Element.__init__(self, content, 'title', 2, **kwargs)
+        Element.__init__(self, content, name, 0, **kwargs)
 
     def render(self, outfile, content, name='', indent_level=0):
-        Element.OneLineTag(self, outfile, self.content, 'title',
-                           self.indent_level)
+        tag_indent = '    ' * self.indent_level
+        oneline = '%s<%s>%s</%s>\n' % (tag_indent, self.name,
+                                       self.content, self.name)
+        outfile.write(oneline)
+
+
+class Title(OneLineTag):
+    def __init__(self, content='', name='', indent_level=0, **kwargs):
+        Element.__init__(self, content, 'title', 2, **kwargs)
