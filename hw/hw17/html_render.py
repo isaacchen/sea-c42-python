@@ -11,10 +11,11 @@ Python class example.
 
 class Element(object):
 
-    def __init__(self, content='', name='html', indent_level=0):
+    def __init__(self, content='', name='html', indent_level=0, **kwargs):
         self.content = content
         self.name = name
         self.indent_level = indent_level
+        self.attributes = kwargs
         # you can define attribute without reference in__init__
         self.children = [content] if content else []
 
@@ -28,7 +29,12 @@ class Element(object):
         if (self.name == 'html'):
             outfile.write('<%s>\n' % self.name)
         else:
-            outfile.write(('%s<%s>\n') % (tag_indent, self.name))
+            if (len(self.attributes) != 0):
+                for k, v in self.attributes.items():
+                    outfile.write('%s<%s %s="%s">\n' %
+                                  (tag_indent, self.name, k, v))
+            else:
+                outfile.write('%s<%s>\n' % (tag_indent, self.name))
 
         for child in self.children:
             if (type(child) == str):
@@ -50,8 +56,8 @@ class Element(object):
 
 
 class Html(Element):
-    def __init__(self, content='', name='', indent_level=0):
-        Element.__init__(self, content='', name='html', indent_level=0)
+    def __init__(self, content='', name='', indent_level=0, **kwargs):
+        Element.__init__(self, '', 'html', 0, **kwargs)
 
     def render(self, outfile, content=''):
         outfile.write('<!DOCTYPE html>\n')
@@ -59,24 +65,24 @@ class Html(Element):
 
 
 class Body(Element):
-    def __init__(self, content='', name='', indent_level=0):
-        Element.__init__(self, content='', name='body', indent_level=1)
+    def __init__(self, content='', name='', indent_level=0, **kwargs):
+        Element.__init__(self, '', 'body', 1, **kwargs)
 
 
 class P(Element):
-    def __init__(self, content, name='', indent_level=0):
-        Element.__init__(self, content, name='p', indent_level=2)
+    def __init__(self, content='', name='', indent_level=0, **kwargs):
+        Element.__init__(self, content, 'p', 2, **kwargs)
 
 
 class Head(Element):
-    def __init__(self, content='', name='', indent_level=0):
-        Element.__init__(self, content='', name='head', indent_level=1)
+    def __init__(self, content='', name='', indent_level=0, **kwargs):
+        Element.__init__(self, '', 'head', 1, **kwargs)
 
 
 class Title(Element):
-    def __init__(self, content, name='', indent_level=0):
-        Element.__init__(self, content, name='title', indent_level=2)
+    def __init__(self, content='', name='', indent_level=0, **kwargs):
+        Element.__init__(self, content, 'title', 2, **kwargs)
 
     def render(self, outfile, content, name='', indent_level=0):
-        Element.OneLineTag(self, outfile, self.content, name='title',
-                           indent_level=self.indent_level)
+        Element.OneLineTag(self, outfile, self.content, 'title',
+                           self.indent_level)
