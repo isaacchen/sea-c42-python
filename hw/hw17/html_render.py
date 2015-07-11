@@ -80,8 +80,9 @@ class OneLineTag(Element):
 
     def render(self, outfile, content, name='', indent_level=0):
         tag_indent = '    ' * self.indent_level
-        oneline = '%s<%s>%s</%s>\n' % (tag_indent, self.name,
-                                       self.content, self.name)
+        tag = self.name
+        text = self.content
+        oneline = '%s<%s>%s</%s>\n' % (tag_indent, tag, text, tag)
         outfile.write(oneline)
 
 
@@ -103,3 +104,15 @@ class SelfClosingTag(Element):
 class Hr(SelfClosingTag):
     def __init__(self, content='', name='', indent_level=0, **kwargs):
         Element.__init__(self, '', 'hr', 2, **kwargs)
+
+
+class A(Element):
+    def __init__(self, content, name, indent_level=0, **kwargs):
+        Element.__init__(self, content, name, 2, **kwargs)
+
+    def render(self, outfile, content, indent_level=0):
+        tag_indent = '    ' * self.indent_level
+        url = self.content
+        text = self.name
+        hrefline = '%s<a href="%s">%s</a>\n' % (tag_indent, url, text)
+        outfile.write(hrefline)
