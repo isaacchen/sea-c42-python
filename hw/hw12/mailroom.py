@@ -1,18 +1,18 @@
 # Revision Goals:
-# more descriptive variable names
+# done: more descriptive variable names
 # done: fix idle print statement
 # make clean pull request
 # done: all-cap global variables, no need for my_local_variable
 # done: full name with space for keys
 # done: new data structure
 # done: fixed extra loop bug by calling back main_menu()
-# check for integer and negative number
+# done: check for integer and negative number
 #
 # HW12 Goals:
 # done: use dicts where appropriate
 # write a full set of letters to everyone to individual files on disk
 # see if you can use a dict to switch between the users selections
-# Try to use a dict and the .format() method to do the letters
+# done: Try to use a dict and the .format() method to do the letters
 
 
 doners = [['John Smith', 320],
@@ -93,7 +93,7 @@ def hw12_thankyou():
 
         amount = take_donation()
         if (amount != 'quit'):
-            hw12_add_record(D_DONERS, choice, amount)
+            D_DONERS[choice].append(amount)
             print(letter(choice, amount))
             input('Press Enter to Continue...\n\n> ')
     # always return to the main menu
@@ -165,7 +165,7 @@ def hw12_report(dict_doner):
 
 def is_number(num):
     try:
-        float(num)
+        int(num)
         return True
     except ValueError:
         return False
@@ -176,8 +176,8 @@ def take_donation():
         amount = input("\nPlease enter a donation amount or 'quit':\n\n> ")
         if (amount == 'quit'):
             return amount
-        elif (is_number(amount)):
-            return amount
+        elif (is_number(amount) and int(amount) > 0):
+            return int(amount)
         else:
             print('\nIncorrect number. Press try again')
 
@@ -220,11 +220,6 @@ def find_name(donerlist, my_name):
 def add_record(donerlist, my_name, my_amount):
     record = [my_name, my_amount]
     donerlist = donerlist.append(record)
-
-
-def hw12_add_record(dict_doner, name, amount):
-    print(type(dict_doner))
-    dict_doner[name].append(int(amount))
 
 
 def letter(name, amount):
