@@ -94,8 +94,7 @@ def hw12_thankyou():
         amount = take_donation()
         if (amount != 'quit'):
             D_DONERS[choice].append(amount)
-            print(letter(choice, amount))
-            input('Press Enter to Continue...\n\n> ')
+            letter(choice, amount)
     # always return to the main menu
     return True
 
@@ -231,7 +230,24 @@ def letter(name, amount):
             'Thanks again,\n\n' +
             'Jim Grant\n' +
             'Director, F.H.W.\n').format(name, float(amount))
-    return text
+    warn = '\nCannot write letter to disk. Press Enter to Continue...\n\n> '
+    if write_letter(name, text):
+        print(text)
+        input('Press Enter to Continue...\n\n> ')
+    else:
+        input(warn)
+
+
+def write_letter(name, text):
+    filename = name.replace(' ', '_') + '.txt'
+    try:
+        f = open(filename, 'w')
+    except IOError:
+        return False
+    else:
+        f.write(text)
+        f.close
+        return True
 
 
 ANSWER = True
