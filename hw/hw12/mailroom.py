@@ -1,19 +1,4 @@
-# Revision Goals:
-# done: more descriptive variable names
-# done: fix idle print statement
-# make clean pull request
-# done: all-cap global variables, no need for my_local_variable
-# done: full name with space for keys
-# done: new data structure
-# done: fixed extra loop bug by calling back main_menu()
-# done: check for integer and negative number
-#
-# HW12 Goals:
-# done: use dicts where appropriate
-# done: write a full set of letters to everyone to individual files on disk
-# see if you can use a dict to switch between the users selections
-# done: Try to use a dict and the .format() method to do the letters
-
+# donations
 D_DONERS = {'John Smith': [320],
             'Mary Simpson': [100, 150, 200],
             'Chris Finch': [400],
@@ -21,6 +6,7 @@ D_DONERS = {'John Smith': [320],
             'Victoria Black': [60]
             }
 
+# letter template
 D_LETTERS = {'dear': 'Dear {},\n\n',
              'amount': 'Thank you so much for your kind donation of ${:.2f}. ',
              'org': 'We here at {} greatly appreciate it. ',
@@ -30,10 +16,12 @@ D_LETTERS = {'dear': 'Dear {},\n\n',
              'title': '{}\n'
              }
 
+# sender name and title
 D_SENDERS = {'FHW': ['Jim Grant', 'Director, F.H.W.'],
              'HAP': ['Harry Johnson', 'Treasurer, H.A.P.']
              }
 
+# organization fullname and mission
 D_ORGS = {'FHW': ['the Foundation for Homeless Whales',
                   'creating new oceans on the moon for whales to live in'],
           'HAP': ['the Home of Abandoned Pennies',
@@ -90,6 +78,7 @@ def thankyou():
 
 
 def countall(d_doner):
+    """Create dictionaries, totals and counts, with doner name as keys"""
     totals = {}
     counts = {}
     for doner, donations in d_doner.items():
@@ -99,6 +88,7 @@ def countall(d_doner):
 
 
 def report(d_doner):
+    """Generate donation report with nice format"""
     (totals, counts) = countall(d_doner)
     names = list_name(d_doner)
     header = '%s|%s |%s |%s\n\n%s\n' % ('Name'.center(20), 'Total'.rjust(10),
@@ -118,6 +108,7 @@ def report(d_doner):
 
 
 def is_number(num):
+    """Verify if dollar amount is integer"""
     try:
         int(num)
         return True
@@ -126,6 +117,7 @@ def is_number(num):
 
 
 def take_donation():
+    """Prompt user for donation amount, no dollar sign needed"""
     while True:
         amount = input("\nPlease enter a donation amount or 'quit':\n\n> ")
         if (amount == 'quit'):
@@ -137,6 +129,7 @@ def take_donation():
 
 
 def list_name(d_doner):
+    """Store full doner names into a set"""
     names = set()
     for doner in d_doner:
         if doner not in names:
@@ -145,13 +138,14 @@ def list_name(d_doner):
 
 
 def list_name_pretty(d_doner):
-    """print doner names one per line"""
+    """Print one doner name per line"""
     for doner in list_name(d_doner):
         print(doner)
     input('\nPress Enter to Continue...\n\n> ')
 
 
 def gen_letter(d_org, d_sender, d_letter, name, amount, org):
+    """Generate letter by template"""
     sender = d_sender[org][0]
     title = d_sender[org][1]
     org_fullname = d_org[org][0]
@@ -168,6 +162,7 @@ def gen_letter(d_org, d_sender, d_letter, name, amount, org):
 
 
 def display_letter(d_org, d_sender, d_letter, name, amount, org):
+    """Display output from gen_letter()"""
     org = ORG
     text = gen_letter(d_org, d_sender, d_letter, name, amount, org)
     print(text)
@@ -175,6 +170,7 @@ def display_letter(d_org, d_sender, d_letter, name, amount, org):
 
 
 def save_letter(d_org, d_sender, d_letter, name, amount, seq, org):
+    """Save output from gen_letter() into file"""
     org = ORG
     text = gen_letter(d_org, d_sender, d_letter, name, amount, org)
 
@@ -191,6 +187,7 @@ def save_letter(d_org, d_sender, d_letter, name, amount, seq, org):
 
 
 def letterForAll(d_org, d_sender, d_letter, d_doner, org):
+    """Save one file per donation"""
     for doner, donations in d_doner.items():
         seq = 0
         for amount in donations:
