@@ -6,7 +6,7 @@
 # done: full name with space for keys
 # done: new data structure
 # done: fixed extra loop bug by calling back main_menu()
-# test negative number and donation with cents
+# check for integer and negative number
 #
 # HW12 Goals:
 # done: use dicts where appropriate
@@ -121,8 +121,7 @@ def hw12_countall(dict_doner):
     totals = {}
     counts = {}
     for doner, donations in dict_doner.items():
-        total = sum(donations)
-        totals[doner] = total
+        totals[doner] = sum(donations)
         counts[doner] = len(donations)
     return totals, counts
 
@@ -148,16 +147,18 @@ def report(donerlist):
 def hw12_report(dict_doner):
     (totals, counts) = hw12_countall(dict_doner)
     names = hw12_list_name(dict_doner)
-    header = ('Name'.center(20) + '|' +
-              'Total'.rjust(10) + ' |' +
-              '#'.rjust(4) + ' |' +
-              'Average'.rjust(10) + '\n\n' + '_' * 60 + '\n')
+    header = '%s|%s |%s |%s\n\n%s\n' % ('Name'.center(20), 'Total'.rjust(10),
+                                        '#'.rjust(3), 'Average'.rjust(10),
+                                        '_' * 60)
     print(header)
     for doner in names:
         count = counts[doner]
         total = totals[doner]
         avg = total / count
-        line = '{:<20} | ${:d} | {:3d} | ${:.2f}'.format(doner, total, count, avg)
+        line = '{:<20}|{:>10} |{:3d} |{:>10}'.format(doner,
+                                                     '${:.2f}'.format(total),
+                                                     count,
+                                                     '${:.2f}'.format(avg))
         print(line)
     input('\nPress Enter to Continue...\n\n> ')
 
@@ -223,23 +224,22 @@ def add_record(donerlist, my_name, my_amount):
 
 def hw12_add_record(dict_doner, name, amount):
     print(type(dict_doner))
-    dict_doner[name].append(amount)
+    dict_doner[name].append(int(amount))
 
 
-def letter(my_name, my_amount):
-    dollar = format(float(my_amount), '.2f')
-    text = ('Dear ' + my_name + ',\n\n' +
-            'Thank you so much for your kind donation of $' + dollar +
+def letter(name, amount):
+    text = ('Dear {},\n\n' +
+            'Thank you so much for your kind donation of ${:.2f}' +
             '. We here at the Foundation for Homeless Whales greatly ' +
             'appreciate it. Your money will go towards creating new oceans ' +
             'on the moon for whales to live in.\n\n' +
             'Thanks again,\n\n' +
             'Jim Grant\n' +
-            'Director, F.H.W.\n')
+            'Director, F.H.W.\n').format(name, float(amount))
     return text
 
 
-ANSWER = False
+ANSWER = True
 
 if (__name__ == '__main__'):
     while ANSWER:
@@ -247,5 +247,3 @@ if (__name__ == '__main__'):
         if not ANSWER:
             # exit the program
             break
-
-print(hw12_report(D_DONERS))
