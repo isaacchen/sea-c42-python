@@ -1,4 +1,4 @@
-# donations
+# records of donation
 D_DONERS = {'John Smith': [320],
             'Mary Simpson': [100, 150, 200],
             'Chris Finch': [400],
@@ -33,6 +33,7 @@ ORG = 'FHW'
 
 
 def main_menu():
+    """Top menu"""
     text = ('\nWelcome to Mailroom Madness\n\n' +
             'Choose from the following:\n\n' +
             'T - Send a (T)hank you\n\n' +
@@ -40,22 +41,21 @@ def main_menu():
             "L - Generate letter for all donations\n\n"
             'quit - Quit the program\n\n> ')
     choice = input(text)
-    if (choice == 'T') or (choice == 't'):
-        thankyou()
+    if choice.lower() not in D_FUNCS:
         return True
-    elif (choice == 'R') or (choice == 'r'):
-        report(D_DONERS)
-        return True
-    elif (choice == 'L') or (choice == 'l'):
-        letterForAll(D_ORGS, D_SENDERS, D_LETTERS, D_DONERS, ORG)
-        return True
-    elif (choice == 'quit'):
-        return False
     else:
-        return True
+        result = D_FUNCS[choice.lower()]()
+        return result
+
+
+def do_thankyou():
+    """Wrapper for thankyou() function"""
+    thankyou()
+    return True
 
 
 def thankyou():
+    """Thankyou top menu"""
     text = ('\nPlease enter a name, or choose from the following:\n\n' +
             'list - Print a list of previous donors\n\n' +
             'quit - Return to main menu\n\n> ')
@@ -85,6 +85,12 @@ def countall(d_doner):
         totals[doner] = sum(donations)
         counts[doner] = len(donations)
     return totals, counts
+
+
+def do_report():
+    """Wrapper for report() function"""
+    report(D_DONERS)
+    return True
 
 
 def report(d_doner):
@@ -175,15 +181,20 @@ def save_letter(d_org, d_sender, d_letter, name, amount, seq, org):
     text = gen_letter(d_org, d_sender, d_letter, name, amount, org)
 
     filename = '%s_%d.txt' % (name.replace(' ', '_'), seq)
-    dir = 'letters'
     try:
-        f = open((dir + '/' + filename), 'w')
+        f = open(filename, 'w')
     except IOError:
         return False
     else:
         f.write(text)
         f.close
         return True
+
+
+def do_letterForAll():
+    """Wrapper for do_letterForAll function"""
+    letterForAll(D_ORGS, D_SENDERS, D_LETTERS, D_DONERS, ORG)
+    return True
 
 
 def letterForAll(d_org, d_sender, d_letter, d_doner, org):
@@ -193,7 +204,22 @@ def letterForAll(d_org, d_sender, d_letter, d_doner, org):
         for amount in donations:
             save_letter(d_org, d_sender, d_letter, doner, amount, seq, org)
             seq += 1
-    print("\n***Please find saved letters in 'letters' directory***")
+    print("\n***Please find saved letters in the current directory***")
+
+
+def do_quit():
+    """Quit the program"""
+    return False
+
+
+# define this after all functions are defined
+D_FUNCS = {'t': do_thankyou,
+           'r': do_report,
+           'l': do_letterForAll,
+           'q': do_quit,
+           'quit': do_quit
+           }
+
 
 ANSWER = True
 
