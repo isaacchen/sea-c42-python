@@ -32,6 +32,25 @@ D_DONERS = {'John Smith': [320],
             'Victoria Black': [60]
             }
 
+D_LETTERS = {'dear': 'Dear {},\n\n',
+             'amount': 'Thank you so much for your kind donation of ${:.2f}. ',
+             'org': 'We here at {} greatly appreciate it. ',
+             'mission': 'Your money will go towards {}.\n\n',
+             'finally': 'Thanks again,\n\n',
+             'sender': '{}\n',
+             'title': '{}\n'
+             }
+
+D_SENDERS = {'FHW': ['Jim Grant', 'Director, F.H.W.'],
+             'HAP': ['Harry Johnson', 'Treasurer, H.A.P.']
+             }
+
+D_ORGS = {'FHW': ['the Foundation for Homeless Whales',
+                  'creating new oceans on the moon for whales to live in'],
+          'HAP': ['the Home of Abandoned Pennies',
+                  'restoring the coins back to their original shine']
+          }
+
 
 def main_menu():
     text = ('\nWelcome to Mailroom Madness\n\n' +
@@ -94,7 +113,7 @@ def hw12_thankyou():
         amount = take_donation()
         if (amount != 'quit'):
             D_DONERS[choice].append(amount)
-            letter(choice, amount)
+            print(hw12_letter(D_ORGS, D_SENDERS, D_LETTERS, choice, amount))
     # always return to the main menu
     return True
 
@@ -219,6 +238,24 @@ def find_name(donerlist, my_name):
 def add_record(donerlist, my_name, my_amount):
     record = [my_name, my_amount]
     donerlist = donerlist.append(record)
+
+
+def hw12_letter(dict_org, dict_sender, dict_letter, name, amount):
+    acronym = 'HAP'
+    sender = dict_sender[acronym][0]
+    title = dict_sender[acronym][1]
+    org = dict_org[acronym][0]
+    mission = dict_org[acronym][1]
+    text = (dict_letter['dear'].format(name) +
+            dict_letter['amount'].format(float(amount)) +
+            dict_letter['org'].format(org) +
+            dict_letter['mission'].format(mission) +
+            dict_letter['finally'] +
+            dict_letter['sender'].format(sender) +
+            dict_letter['title'].format(title)
+            )
+    print(text)
+    input('Press Enter to Continue...\n\n> ')
 
 
 def letter(name, amount):
