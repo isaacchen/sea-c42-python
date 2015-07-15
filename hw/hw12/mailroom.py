@@ -187,7 +187,7 @@ def save_letter(d_org, d_sender, d_letter, name, amount, seq, org):
         return False
     else:
         f.write(text)
-        f.close
+        f.close()
         return True
 
 
