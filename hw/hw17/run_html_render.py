@@ -23,12 +23,21 @@ def render(page, filename):
     write to file -- very handy!
     """
 
+<<<<<<< HEAD
+   f.seek(0)
+=======
     f = io.StringIO()
     page.render(f)
+>>>>>>> 2bbbde7643fcbc527daa52ac71dbdcca59555817
 
     print(f.getvalue())
 
+<<<<<<< HEAD
+   f.seek(0)
+   codecs.open(filename, 'w', encoding="utf-8").write( f.read() )
+=======
     codecs.open(filename, 'w', encoding="utf-8").write(f.getvalue())
+>>>>>>> 2bbbde7643fcbc527daa52ac71dbdcca59555817
 
 
 ## Step 1
